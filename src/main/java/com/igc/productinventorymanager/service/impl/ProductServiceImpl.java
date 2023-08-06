@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -62,8 +63,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductModel getProduct(Integer id){
-        ProductEntity productEntity = productRepo.findById(id).get();
-        if(productEntity != null) {
+        Optional<ProductEntity> productEntity = productRepo.findById(id);
+        if(productEntity.isPresent()) {
             ProductModel productModel = modelMapper.map(productEntity, ProductModel.class);
             return productModel;
         }   else {
