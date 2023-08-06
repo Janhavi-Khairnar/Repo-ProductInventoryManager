@@ -64,13 +64,20 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductModel getProduct(Integer id){
-        Optional<ProductEntity> productEntity = productRepo.findById(id);
+
+       /* 1) First Method
+       Optional<ProductEntity> productEntity = productRepo.findById(id);
         if(productEntity.isPresent()) {
             ProductModel productModel = modelMapper.map(productEntity, ProductModel.class);
             return productModel;
         }
         throw new ProductNotFoundException("Product not found.");
+        */
 
+        // 2) Second Method
+        ProductEntity productEntity = productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found."));
+        ProductModel productModel = modelMapper.map(productEntity, ProductModel.class);
+        return productModel;
 
     }
 }
