@@ -4,6 +4,7 @@ import com.igc.productinventorymanager.entity.ProductEntity;
 import com.igc.productinventorymanager.model.ProductModel;
 import com.igc.productinventorymanager.repo.ProductRepo;
 import com.igc.productinventorymanager.service.IProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,15 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     ProductRepo productRepo;
 
-
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
-    public ProductEntity addProduct(ProductModel productModel) {
+    public ProductModel addProduct(ProductModel productModel) {
         ProductEntity productEntity = new ProductEntity(productModel);
-        return productRepo.save(productEntity);
+        ProductModel productModel2 = modelMapper.map(productEntity, ProductModel.class);
+        productRepo.save(productEntity);
+        return productModel2;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public String updateProduct(Integer id, ProductModel productModel) {
-        ProductEntity productEntity = getProduct(id);
+        ProductEntity productEntity = productRepo.findById(id).get();
         if(productEntity != null) {
                 productEntity.setName(productModel.getName());
                 productEntity.setDescription(productModel.getDescription());
@@ -46,7 +50,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public String deleteProduct(Integer id) {
-        ProductEntity productEntity = getProduct(id);
+        ProductEntity productEntity = productRepo.findById(id).get();
         if (productEntity != null) {
             productRepo.delete(productEntity);
             return "Product is deleted.";
@@ -57,7 +61,15 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductEntity getProduct(Integer id){
-        return productRepo.findById(id).get();
+    public ProductModel getProduct(Integer id){
+        ProductEntity productEntity = productRepo.findById(id).get();
+        if(productEntity != null) {
+            ProductModel productModel = modelMapper.map(productEntity, ProductModel.class);
+            return productModel;
+        }   else {
+            return null;
+        }
+
+
     }
 }

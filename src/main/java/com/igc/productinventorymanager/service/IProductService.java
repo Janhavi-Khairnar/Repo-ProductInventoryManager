@@ -6,7 +6,7 @@ import com.igc.productinventorymanager.model.ProductModel;
 import java.util.List;
 
 public interface IProductService {
-    public ProductEntity addProduct(ProductModel productModel);
+    public ProductModel addProduct(ProductModel productModel);
 
     public List<ProductEntity> getAllProduct();
 
@@ -14,7 +14,7 @@ public interface IProductService {
 
     public String deleteProduct(Integer id);
 
-    public ProductEntity getProduct(Integer id);
+    public ProductModel getProduct(Integer id);
 
 
 }
