@@ -1,6 +1,7 @@
 package com.igc.productinventorymanager.service.impl;
 
 import com.igc.productinventorymanager.entity.ProductEntity;
+import com.igc.productinventorymanager.exception.ProductNotFoundException;
 import com.igc.productinventorymanager.model.ProductModel;
 import com.igc.productinventorymanager.repo.ProductRepo;
 import com.igc.productinventorymanager.service.IProductService;
@@ -67,9 +68,8 @@ public class ProductServiceImpl implements IProductService {
         if(productEntity.isPresent()) {
             ProductModel productModel = modelMapper.map(productEntity, ProductModel.class);
             return productModel;
-        }   else {
-            return null;
         }
+        throw new ProductNotFoundException("Product not found.");
 
 
     }
