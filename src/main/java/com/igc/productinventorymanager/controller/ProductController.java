@@ -9,6 +9,7 @@ import com.igc.productinventorymanager.service.impl.ProductServiceImpl;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.validation.Valid;
 import org.apache.catalina.LifecycleState;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ProductController {
     ProductServiceImpl productService;
 
     @PostMapping("/addproduct")
-    public ResponseEntity<?> addProduct(@RequestBody ProductModel productModel) {
+    public ResponseEntity<?> addProduct(@RequestBody @Valid ProductModel productModel) {
         return new ResponseEntity<>(new Response("Product Added", HttpStatus.CREATED, productService.addProduct(productModel)),HttpStatus.CREATED) ;
     }
     /*2} @PostMapping("/addproduct")
