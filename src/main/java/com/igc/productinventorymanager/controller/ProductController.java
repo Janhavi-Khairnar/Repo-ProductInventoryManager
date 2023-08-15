@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/product/api")
 public class ProductController {
@@ -40,13 +41,13 @@ public class ProductController {
 
     @GetMapping("/getAllProduct")
     public ResponseEntity<?> getAllProduct() {
-        return new ResponseEntity<>(new Response("All Product Listed", HttpStatus.FOUND, productService.getAllProduct()), HttpStatus.FOUND) ;
+        return new ResponseEntity<>(new Response("All Product Listed", HttpStatus.OK, productService.getAllProduct()), HttpStatus.OK) ;
     }
 
 
     @GetMapping("/getProduct/{id}")
     public ResponseEntity<?> getProduct(@PathVariable ("id") Integer id) {
-        return new ResponseEntity<>(new Response("Product find", HttpStatus.FOUND,productService.getProduct(id)), HttpStatus.FOUND);
+        return new ResponseEntity<>(new Response("Product find", HttpStatus.OK,productService.getProduct(id)), HttpStatus.OK);
     }
 
 

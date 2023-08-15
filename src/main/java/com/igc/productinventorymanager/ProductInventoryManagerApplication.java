@@ -14,6 +14,7 @@ public class ProductInventoryManagerApplication {
 
     @Bean
     public ModelMapper getModelMapper() {
+
         return  new ModelMapper();
     }
 
